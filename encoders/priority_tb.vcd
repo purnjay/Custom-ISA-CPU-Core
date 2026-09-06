@@ -1,5 +1,5 @@
 $date
-	Sat Sep 05 23:52:39 2026
+	Sat Sep 05 23:53:04 2026
 $end
 $version
 	Icarus Verilog
@@ -7,10 +7,10 @@ $end
 $timescale
 	1ps
 $end
-$scope module encoder_tb $end
+$scope module priority_tb $end
 $var wire 3 ! out [2:0] $end
 $var reg 8 " in [7:0] $end
-$scope module e0 $end
+$scope module p0 $end
 $var wire 8 # in [7:0] $end
 $var reg 3 $ out [2:0] $end
 $upscope $end
@@ -21,10 +21,10 @@ $dumpall
 $end
 #0
 $dumpvars
-b0 $
-b1 #
-b1 "
-b0 !
+b111 $
+b10000001 #
+b10000001 "
+b111 !
 $end
 #5000
 b1 !
@@ -32,15 +32,15 @@ b1 $
 b10 "
 b10 #
 #10000
-b10 !
-b10 $
-b100 "
-b100 #
+b110 !
+b110 $
+b1000100 "
+b1000100 #
 #15000
 b11 !
 b11 $
-b1000 "
-b1000 #
+b1010 "
+b1010 #
 #20000
 b100 !
 b100 $
@@ -57,8 +57,8 @@ b110 $
 b1000000 "
 b1000000 #
 #35000
-b111 !
-b111 $
-b10000000 "
-b10000000 #
+b0 !
+b0 $
+b0 "
+b0 #
 #40000
