@@ -1,0 +1,32 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_00000223a2fd2d20 .scope module, "mag_comp_N" "mag_comp_N" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "result_less_than";
+    .port_info 3 /OUTPUT 1 "result_equal_to";
+    .port_info 4 /OUTPUT 1 "result_greater_than";
+P_00000223a3005f90 .param/l "N" 0 2 1, +C4<00000000000000000000000000000001>;
+o00000223a3006fd8 .functor BUFZ 1, C4<z>; HiZ drive
+o00000223a3007008 .functor BUFZ 1, C4<z>; HiZ drive
+L_00000223a30ee4a0 .functor XNOR 1, o00000223a3006fd8, o00000223a3007008, C4<0>, C4<0>;
+v00000223a2fd3700_0 .net "a", 0 0, o00000223a3006fd8;  0 drivers
+v00000223a30ec500_0 .net "b", 0 0, o00000223a3007008;  0 drivers
+v00000223a30eee40_0 .net "result_equal_to", 0 0, L_00000223a30ee4a0;  1 drivers
+v00000223a30ee400_0 .net "result_greater_than", 0 0, L_00000223a2fd2ff0;  1 drivers
+v00000223a2fd2eb0_0 .net "result_less_than", 0 0, L_00000223a2fd2f50;  1 drivers
+L_00000223a2fd2f50 .cmp/gt 1, o00000223a3007008, o00000223a3006fd8;
+L_00000223a2fd2ff0 .cmp/gt 1, o00000223a3006fd8, o00000223a3007008;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "mag_comparator.v";
