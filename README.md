@@ -62,8 +62,7 @@ part of the datapath itself are just fixed at 8 bits since that is the width I a
 
 ## What is next
 
-Rest of the datapath first. The 8 bit ALU, wrapping add_sub and the barrel shifter and the
-comparator behind one op select with the flags coming out of it. Then sequential logic, so flip
+Rest of the datapath first. The 8 bit ALU. Then sequential logic, so flip
 flops and registers, and from there the register file.
 
 After that the core itself. A minimal custom ISA of about 8 to 10 instructions, then a single
