@@ -1,0 +1,59 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_000001dcc9ab2d20 .scope module, "barrel_shifter" "barrel_shifter" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 8 "in";
+    .port_info 1 /INPUT 3 "shifting";
+    .port_info 2 /OUTPUT 8 "out_shifted";
+v000001dcc9ab34f0_0 .net *"_ivl_1", 0 0, L_000001dcc9b2c530;  1 drivers
+v000001dcc9a29460_0 .net *"_ivl_11", 0 0, L_000001dcc9b2c7b0;  1 drivers
+v000001dcc9a2c410_0 .net *"_ivl_13", 5 0, L_000001dcc9b2c850;  1 drivers
+L_000001dcc9b2cc80 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
+v000001dcc9b2c210_0 .net/2u *"_ivl_14", 1 0, L_000001dcc9b2cc80;  1 drivers
+v000001dcc9b2c030_0 .net *"_ivl_16", 7 0, L_000001dcc9b2cad0;  1 drivers
+v000001dcc9b2c670_0 .net *"_ivl_21", 0 0, L_000001dcc9b75230;  1 drivers
+v000001dcc9b2bdb0_0 .net *"_ivl_23", 4 0, L_000001dcc9b750f0;  1 drivers
+L_000001dcc9b2ccc8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v000001dcc9b2c170_0 .net/2u *"_ivl_24", 3 0, L_000001dcc9b2ccc8;  1 drivers
+v000001dcc9b2c490_0 .net *"_ivl_26", 8 0, L_000001dcc9b75550;  1 drivers
+v000001dcc9b2bd10_0 .net *"_ivl_28", 8 0, L_000001dcc9b76090;  1 drivers
+v000001dcc9b2bc70_0 .net *"_ivl_3", 6 0, L_000001dcc9b2c990;  1 drivers
+L_000001dcc9b2cd10 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v000001dcc9b2c350_0 .net *"_ivl_31", 0 0, L_000001dcc9b2cd10;  1 drivers
+v000001dcc9b2be50_0 .net *"_ivl_32", 8 0, L_000001dcc9b76270;  1 drivers
+L_000001dcc9b2cc38 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v000001dcc9b2bef0_0 .net/2u *"_ivl_4", 0 0, L_000001dcc9b2cc38;  1 drivers
+v000001dcc9b2c8f0_0 .net *"_ivl_6", 7 0, L_000001dcc9b2c5d0;  1 drivers
+o000001dcc9ae7288 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v000001dcc9b2ca30_0 .net "in", 7 0, o000001dcc9ae7288;  0 drivers
+v000001dcc9b2bf90_0 .net "out0", 7 0, L_000001dcc9b2c710;  1 drivers
+v000001dcc9b2c0d0_0 .net "out1", 7 0, L_000001dcc9b2cb70;  1 drivers
+v000001dcc9b2c2b0_0 .net "out_shifted", 7 0, L_000001dcc9b764f0;  1 drivers
+o000001dcc9ae7348 .functor BUFZ 3, C4<zzz>; HiZ drive
+v000001dcc9b2c3f0_0 .net "shifting", 2 0, o000001dcc9ae7348;  0 drivers
+L_000001dcc9b2c530 .part o000001dcc9ae7348, 0, 1;
+L_000001dcc9b2c990 .part o000001dcc9ae7288, 0, 7;
+L_000001dcc9b2c5d0 .concat [ 1 7 0 0], L_000001dcc9b2cc38, L_000001dcc9b2c990;
+L_000001dcc9b2c710 .functor MUXZ 8, o000001dcc9ae7288, L_000001dcc9b2c5d0, L_000001dcc9b2c530, C4<>;
+L_000001dcc9b2c7b0 .part o000001dcc9ae7348, 1, 1;
+L_000001dcc9b2c850 .part L_000001dcc9b2c710, 0, 6;
+L_000001dcc9b2cad0 .concat [ 2 6 0 0], L_000001dcc9b2cc80, L_000001dcc9b2c850;
+L_000001dcc9b2cb70 .functor MUXZ 8, o000001dcc9ae7288, L_000001dcc9b2cad0, L_000001dcc9b2c7b0, C4<>;
+L_000001dcc9b75230 .part o000001dcc9ae7348, 2, 1;
+L_000001dcc9b750f0 .part L_000001dcc9b2cb70, 0, 5;
+L_000001dcc9b75550 .concat [ 4 5 0 0], L_000001dcc9b2ccc8, L_000001dcc9b750f0;
+L_000001dcc9b76090 .concat [ 8 1 0 0], o000001dcc9ae7288, L_000001dcc9b2cd10;
+L_000001dcc9b76270 .functor MUXZ 9, L_000001dcc9b76090, L_000001dcc9b75550, L_000001dcc9b75230, C4<>;
+L_000001dcc9b764f0 .part L_000001dcc9b76270, 0, 8;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "barrel_shifter.v";

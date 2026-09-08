@@ -41,23 +41,30 @@ In the order I did them, since most of them build on the one before it.
 | encoders | `_encoder8to3` | `encoder_tb.v` | Plain 8 to 3 encoder, just OR gates on the input bits. Only works if the input is one hot, it can't tell an input of 0 from an input of 1 because both come out as 000. |
 | encoders | `priorityEn8_3` | `priority_tb.v` | Priority encoder I did after, to fix that. casez with ? wildcards grabs the highest set bit, so an input with several bits set still gives a sensible answer. |
 | comparator | `mag_comp_N` | `mag_comp_tb.v` | N bit magnitude comparator with three outputs for a < b, a == b and a > b. Tested at N = 4. The branch conditions in the ISA come off of this. |
+| add_sub | `add_sub` | `add_sub_tb.v` | 8 bit add and subtract in one unit, sel picks which (0 adds, 1 subtracts). Subtracting works by XOR'ing b with sel to flip it and feeding sel in as the carry in, so it is twos complement through the same ripple carry adder instead of a separate subtractor. Signed overflow comes out of it too, worked out by XOR'ing the carry into the top bit with the carry out of it, since those only disagree when the sign ends up wrong. |
+| barrel_shifter | `barrel_shifter` | `barrelshifter_tb.v` | 8 bit left shifter for a shift amount of 0 to 7. Three stages of muxes that shift by 1, 2 and 4, so any amount is just the right combination of the three stages instead of a separate shifter per amount. This is for the shift instructions in the ISA. |
 
 ## Notes to self
 
-The testbenches don't check themselves. They print with $monitor or $display and I compare it to
-the truth table by eye. Most of them dump a vcd too so I can open it in GTKWave and confirm it
-there instead of only trusting the terminal. Once the blocks get bigger than a truth table I want
-to move the checking into cocotb so the tests actually pass or fail on their own.
+The testbenches mostly don't check themselves. They print with $monitor or $display and I compare
+it to the truth table by eye. The barrel shifter one is the exception, it prints the expected
+value next to the actual one so I am not working it out in my head every time, and that is the
+direction I want the rest of them to go. Most of them dump a vcd too so I can open it in GTKWave
+and confirm it there instead of only trusting the terminal. Once the blocks get bigger than a
+truth table I want to move the checking into cocotb so the tests actually pass or fail on their
+own.
 
 Where the width is the interesting part (adder, decoder, comparator) the module is written with a
 parameter N and the testbench picks the actual width when it instantiates it. Keeping them
-parameterized means I can pull the same modules into the 8 bit datapath without rewriting them.
+parameterized means I can pull the same modules into the datapath without rewriting them, which
+is what add_sub does when it instantiates the ripple carry adder at N = 8. The units that are
+part of the datapath itself are just fixed at 8 bits since that is the width I am building to.
 
 ## What is next
 
-Rest of the datapath first. Subtractor off the adder using twos complement, then the 8 bit ALU,
-then sequential logic so flip flops and registers and from there the register file, and a barrel
-shifter for the shift instructions.
+Rest of the datapath first. The 8 bit ALU, wrapping add_sub and the barrel shifter and the
+comparator behind one op select with the flags coming out of it. Then sequential logic, so flip
+flops and registers, and from there the register file.
 
 After that the core itself. A minimal custom ISA of about 8 to 10 instructions, then a single
 cycle implementation wiring the datapath to a control unit built on the decoder. cocotb
