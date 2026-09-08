@@ -25,19 +25,15 @@ gtkwave n_decoder_tb.vcd
 You only pass the testbench to iverilog, it already includes the design file it needs. Same thing
 for every other folder, just swap in that testbench name.
 
-ALU.v sits at the root instead of in a folder, so the include inside add_sub.v doesn't line up
-from here and it needs the include path passed in:
-
-```
-iverilog -I add_sub -o ALU.out ALU.v
-```
+Every module folder is one level deep on purpose, so the .. in the includes always means the repo
+root and the same two commands work everywhere, ALU included.
 
 The .v.out and .vcd files sitting in the folders are just compiler and simulation output, the
 commands above make them again.
 
 ## The ALU
 
-`ALU.v`, 8 bits wide, and this is where phase 1 ends up. A 3 bit op picks the operation, add and
+`ALU/ALU.v`, 8 bits wide, and this is where phase 1 ends up. A 3 bit op picks the operation, add and
 sub go through the add_sub unit and the logic ops are done right there in the case.
 
 | op | operation |
@@ -79,6 +75,7 @@ In the order I did them, since most of them build on the one before it.
 | comparator | `mag_comp_N` | `mag_comp_tb.v` | N bit magnitude comparator with three outputs for a < b, a == b and a > b. Tested at N = 4. The branch conditions in the ISA come off of this. |
 | add_sub | `add_sub` | `add_sub_tb.v` | 8 bit add and subtract in one unit, sel picks which (0 adds, 1 subtracts). Subtracting works by XOR'ing b with sel to flip it and feeding sel in as the carry in, so it is twos complement through the same ripple carry adder instead of a separate subtractor. Puts out signed overflow and the carry out for the ALU to use. |
 | barrel_shifter | `barrel_shifter` | `barrelshifter_tb.v` | 8 bit left shifter for a shift amount of 0 to 7. Three stages of muxes that shift by 1, 2 and 4, so any amount is just the right combination of the three stages instead of a separate shifter per amount. Not wired into the ALU yet. |
+| ALU | `ALU` | none yet | Everything above tied together behind a 3 bit op. Written up properly further up. |
 
 ## Notes to self
 

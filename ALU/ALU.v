@@ -1,4 +1,4 @@
-`include "./add_sub/add_sub.v"
+`include "../add_sub/add_sub.v"
 
 //------------------------
 // ARTHEMATIC LOGIC UNIT
