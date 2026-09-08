@@ -10,7 +10,8 @@ module add_sub(
 
     // output the result
     output [7:0] result,
-    output overflow
+    output overflow,
+    output cout
 );
 
 // wire to cary xor'ed b input 
@@ -27,5 +28,8 @@ assign carry0 = a[7] ^ b_sub[7] ^ result[7];
 
 // the overflow is calculated by xoring the second last carry and last carry 
 assign overflow = carry0 ^ carry1;
+
+//send the carry out for the ALU
+assign cout = carry1;
 
 endmodule
