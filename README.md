@@ -1,14 +1,16 @@
 # Learning FPGA Dev
 
 RTL building blocks I am writing from scratch in Verilog, on the way to a single cycle processor
-core running a custom ISA. Each folder is one piece of the datapath with its design file, a
-testbench for it, and usually a waveform dump.
+core running a custom ISA. Combinational/ has the blocks that are just logic, Sequential/ is
+where the clocked stuff goes once I get there. Each folder inside them is one piece of the
+datapath with its design file, a testbench for it, and usually a waveform dump.
 
 Everything is simulated with Icarus Verilog and viewed in GTKWave out of the OSS CAD Suite. Once
 the core is together the plan is to take it through logic synthesis and place and route with
 Yosys and nextpnr.
 
-Phase 1 is done. All the combinational blocks are built and they come together in the ALU.
+Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
+ALU has a testbench of its own. Sequential/ is phase 2 and it is empty for now.
 
 ## Running a testbench
 
@@ -16,7 +18,7 @@ The testbenches include the design files with relative paths, so cd into the fol
 compile and run it:
 
 ```
-cd decoders
+cd Combinational/decoders
 iverilog -o n_decoder_tb.out n_decoder_tb.v
 vvp n_decoder_tb.out
 gtkwave n_decoder_tb.vcd
@@ -25,15 +27,15 @@ gtkwave n_decoder_tb.vcd
 You only pass the testbench to iverilog, it already includes the design file it needs. Same thing
 for every other folder, just swap in that testbench name.
 
-Every module folder is one level deep on purpose, so the .. in the includes always means the repo
-root and the same two commands work everywhere, ALU included.
+Every module sits at the same depth on purpose, so the .. in the includes always points at the
+folder holding all of them and the same two commands work everywhere, ALU included.
 
 The .v.out and .vcd files sitting in the folders are just compiler and simulation output, the
 commands above make them again.
 
 ## The ALU
 
-`ALU/ALU.v`, 8 bits wide, and this is where phase 1 ends up. A 3 bit op picks the operation, add and
+`Combinational/ALU/ALU.v`, 8 bits wide, and this is where phase 1 ends up. A 3 bit op picks the operation, add and
 sub go through the add_sub unit and the logic ops are done right there in the case.
 
 | op | operation |
@@ -60,7 +62,8 @@ SUB. The logic ops leave whatever the adder happened to produce sitting on them.
 
 ## The building blocks
 
-In the order I did them, since most of them build on the one before it.
+All of these live in Combinational/. In the order I did them, since most of them build on the
+one before it.
 
 | Folder | Module | Testbench | What it does |
 | --- | --- | --- | --- |
@@ -75,7 +78,7 @@ In the order I did them, since most of them build on the one before it.
 | comparator | `mag_comp_N` | `mag_comp_tb.v` | N bit magnitude comparator with three outputs for a < b, a == b and a > b. Tested at N = 4. The branch conditions in the ISA come off of this. |
 | add_sub | `add_sub` | `add_sub_tb.v` | 8 bit add and subtract in one unit, sel picks which (0 adds, 1 subtracts). Subtracting works by XOR'ing b with sel to flip it and feeding sel in as the carry in, so it is twos complement through the same ripple carry adder instead of a separate subtractor. Puts out signed overflow and the carry out for the ALU to use. |
 | barrel_shifter | `barrel_shifter` | `barrelshifter_tb.v` | 8 bit left shifter for a shift amount of 0 to 7. Three stages of muxes that shift by 1, 2 and 4, so any amount is just the right combination of the three stages instead of a separate shifter per amount. Not wired into the ALU yet. |
-| ALU | `ALU` | none yet | Everything above tied together behind a 3 bit op. Written up properly further up. |
+| ALU | `ALU` | `alu_tb.v` | Everything above tied together behind a 3 bit op. Written up properly further up. |
 
 ## Notes to self
 
@@ -95,10 +98,10 @@ part of the datapath itself are just fixed at 8 bits since that is the width I a
 
 ## What is next
 
-The ALU still needs a proper testbench of its own, and the barrel shifter needs to get folded in
-as shift opcodes on the two unused op codes.
+Fold the barrel shifter into the ALU as shift opcodes on the two unused op codes, since it is
+built and tested but nothing calls it yet.
 
-Then sequential logic, so flip flops and registers, and from there the register file.
+Then Sequential/, so flip flops and registers, and from there the register file.
 
 After that the core itself. A minimal custom ISA of about 8 to 10 instructions, then a single
 cycle implementation wiring the datapath to a control unit built on the decoder. cocotb
