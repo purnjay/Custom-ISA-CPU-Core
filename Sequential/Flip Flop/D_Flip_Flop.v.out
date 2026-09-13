@@ -1,0 +1,86 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_000002d1be9bdd00 .scope module, "d_flip_flop" "d_flip_flop" 2 4;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "D";
+    .port_info 1 /INPUT 1 "clk";
+    .port_info 2 /OUTPUT 1 "Q";
+    .port_info 3 /OUTPUT 1 "Qbar";
+o000002d1bea07458 .functor BUFZ 1, C4<z>; HiZ drive
+L_000002d1bea529f0 .functor NOT 1, o000002d1bea07458, C4<0>, C4<0>, C4<0>;
+o000002d1bea07158 .functor BUFZ 1, C4<z>; HiZ drive
+v000002d1bea520e0_0 .net "D", 0 0, o000002d1bea07158;  0 drivers
+v000002d1bea52540_0 .net "Q", 0 0, L_000002d1bea52e30;  1 drivers
+v000002d1bea52040_0 .net "Q_carry", 0 0, L_000002d1bea52880;  1 drivers
+v000002d1bea52180_0 .net "Qbar", 0 0, L_000002d1bea53140;  1 drivers
+v000002d1bea52680_0 .net "clk", 0 0, o000002d1bea07458;  0 drivers
+S_000002d1be9bde90 .scope module, "d0" "D_latch" 2 13, 3 4 0, S_000002d1be9bdd00;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "D";
+    .port_info 1 /INPUT 1 "enable";
+    .port_info 2 /OUTPUT 1 "Qbar";
+    .port_info 3 /OUTPUT 1 "Q";
+L_000002d1bea04a60 .functor AND 1, o000002d1bea07158, L_000002d1bea529f0, C4<1>, C4<1>;
+L_000002d1be9beea0 .functor NOT 1, o000002d1bea07158, C4<0>, C4<0>, C4<0>;
+L_000002d1be9bef10 .functor AND 1, L_000002d1be9beea0, L_000002d1bea529f0, C4<1>, C4<1>;
+v000002d1be9bed60_0 .net "D", 0 0, o000002d1bea07158;  alias, 0 drivers
+v000002d1be9bee00_0 .net "Q", 0 0, L_000002d1bea52880;  alias, 1 drivers
+v000002d1bea524a0_0 .net "Qbar", 0 0, L_000002d1bea52980;  1 drivers
+v000002d1bea51c80_0 .net *"_ivl_2", 0 0, L_000002d1be9beea0;  1 drivers
+v000002d1bea51960_0 .net "enable", 0 0, L_000002d1bea529f0;  1 drivers
+v000002d1bea518c0_0 .net "reset", 0 0, L_000002d1be9bef10;  1 drivers
+v000002d1bea52720_0 .net "set", 0 0, L_000002d1bea04a60;  1 drivers
+S_000002d1be9beb30 .scope module, "s0" "SR_Latch" 3 16, 4 2 0, S_000002d1be9bde90;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "set";
+    .port_info 1 /INPUT 1 "reset";
+    .port_info 2 /OUTPUT 1 "Q";
+    .port_info 3 /OUTPUT 1 "Qn";
+L_000002d1bea52880 .functor NOR 1, L_000002d1be9bef10, L_000002d1bea52980, C4<0>, C4<0>;
+L_000002d1bea52980 .functor NOR 1, L_000002d1bea04a60, L_000002d1bea52880, C4<0>, C4<0>;
+v000002d1be9d3620_0 .net "Q", 0 0, L_000002d1bea52880;  alias, 1 drivers
+v000002d1be9d31a0_0 .net "Qn", 0 0, L_000002d1bea52980;  alias, 1 drivers
+v000002d1be9d3400_0 .net "reset", 0 0, L_000002d1be9bef10;  alias, 1 drivers
+v000002d1be9becc0_0 .net "set", 0 0, L_000002d1bea04a60;  alias, 1 drivers
+S_000002d1bea03f30 .scope module, "d1" "D_latch" 2 15, 3 4 0, S_000002d1be9bdd00;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "D";
+    .port_info 1 /INPUT 1 "enable";
+    .port_info 2 /OUTPUT 1 "Qbar";
+    .port_info 3 /OUTPUT 1 "Q";
+L_000002d1bea52dc0 .functor AND 1, L_000002d1bea52880, o000002d1bea07458, C4<1>, C4<1>;
+L_000002d1bea530d0 .functor NOT 1, L_000002d1bea52880, C4<0>, C4<0>, C4<0>;
+L_000002d1bea52f10 .functor AND 1, L_000002d1bea530d0, o000002d1bea07458, C4<1>, C4<1>;
+v000002d1bea51dc0_0 .net "D", 0 0, L_000002d1bea52880;  alias, 1 drivers
+v000002d1bea51aa0_0 .net "Q", 0 0, L_000002d1bea52e30;  alias, 1 drivers
+v000002d1bea51b40_0 .net "Qbar", 0 0, L_000002d1bea53140;  alias, 1 drivers
+v000002d1bea51be0_0 .net *"_ivl_2", 0 0, L_000002d1bea530d0;  1 drivers
+v000002d1bea51e60_0 .net "enable", 0 0, o000002d1bea07458;  alias, 0 drivers
+v000002d1bea51f00_0 .net "reset", 0 0, L_000002d1bea52f10;  1 drivers
+v000002d1bea51fa0_0 .net "set", 0 0, L_000002d1bea52dc0;  1 drivers
+S_000002d1bea040c0 .scope module, "s0" "SR_Latch" 3 16, 4 2 0, S_000002d1bea03f30;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "set";
+    .port_info 1 /INPUT 1 "reset";
+    .port_info 2 /OUTPUT 1 "Q";
+    .port_info 3 /OUTPUT 1 "Qn";
+L_000002d1bea52e30 .functor NOR 1, L_000002d1bea52f10, L_000002d1bea53140, C4<0>, C4<0>;
+L_000002d1bea53140 .functor NOR 1, L_000002d1bea52dc0, L_000002d1bea52e30, C4<0>, C4<0>;
+v000002d1bea51a00_0 .net "Q", 0 0, L_000002d1bea52e30;  alias, 1 drivers
+v000002d1bea527c0_0 .net "Qn", 0 0, L_000002d1bea53140;  alias, 1 drivers
+v000002d1bea525e0_0 .net "reset", 0 0, L_000002d1bea52f10;  alias, 1 drivers
+v000002d1bea51d20_0 .net "set", 0 0, L_000002d1bea52dc0;  alias, 1 drivers
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "D_Flip_Flop.v";
+    "./../D/D_Latch.v";
+    "./../SR_Latch/SR_Latch.v";

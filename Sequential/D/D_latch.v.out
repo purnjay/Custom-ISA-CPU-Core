@@ -1,0 +1,45 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_00000193b272dbe0 .scope module, "D_latch" "D_latch" 2 4;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "D";
+    .port_info 1 /INPUT 1 "enable";
+    .port_info 2 /OUTPUT 1 "Qbar";
+    .port_info 3 /OUTPUT 1 "Q";
+o00000193b25f7118 .functor BUFZ 1, C4<z>; HiZ drive
+o00000193b25f7178 .functor BUFZ 1, C4<z>; HiZ drive
+L_00000193b2729960 .functor AND 1, o00000193b25f7118, o00000193b25f7178, C4<1>, C4<1>;
+L_00000193b25c3800 .functor NOT 1, o00000193b25f7118, C4<0>, C4<0>, C4<0>;
+L_00000193b25f22c0 .functor AND 1, L_00000193b25c3800, o00000193b25f7178, C4<1>, C4<1>;
+v00000193b272df00_0 .net "D", 0 0, o00000193b25f7118;  0 drivers
+v00000193b272dfa0_0 .net "Q", 0 0, L_00000193b25f2330;  1 drivers
+v00000193b25f1fa0_0 .net "Qbar", 0 0, L_00000193b25f23a0;  1 drivers
+v00000193b25f2040_0 .net *"_ivl_2", 0 0, L_00000193b25c3800;  1 drivers
+v00000193b25f20e0_0 .net "enable", 0 0, o00000193b25f7178;  0 drivers
+v00000193b25f2180_0 .net "reset", 0 0, L_00000193b25f22c0;  1 drivers
+v00000193b25f2220_0 .net "set", 0 0, L_00000193b2729960;  1 drivers
+S_00000193b272dd70 .scope module, "s0" "SR_Latch" 2 16, 3 2 0, S_00000193b272dbe0;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "set";
+    .port_info 1 /INPUT 1 "reset";
+    .port_info 2 /OUTPUT 1 "Q";
+    .port_info 3 /OUTPUT 1 "Qn";
+L_00000193b25f2330 .functor NOR 1, L_00000193b25f22c0, L_00000193b25f23a0, C4<0>, C4<0>;
+L_00000193b25f23a0 .functor NOR 1, L_00000193b2729960, L_00000193b25f2330, C4<0>, C4<0>;
+v00000193b25c35e0_0 .net "Q", 0 0, L_00000193b25f2330;  alias, 1 drivers
+v00000193b25c3160_0 .net "Qn", 0 0, L_00000193b25f23a0;  alias, 1 drivers
+v00000193b25c33c0_0 .net "reset", 0 0, L_00000193b25f22c0;  alias, 1 drivers
+v00000193b27298c0_0 .net "set", 0 0, L_00000193b2729960;  alias, 1 drivers
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "D_latch.v";
+    "./../SR_Latch/SR_Latch.v";

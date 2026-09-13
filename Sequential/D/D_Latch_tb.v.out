@@ -1,0 +1,77 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_0000019b76a6c820 .scope module, "d_latch_tb" "d_latch_tb" 2 3;
+ .timescale -12 -12;
+v0000019b76a82ee0_0 .var "D", 0 0;
+v0000019b76b00bc0_0 .net "Q", 0 0, L_0000019b76a82ff0;  1 drivers
+v0000019b76b00ee0_0 .var "en", 0 0;
+S_0000019b76ab5e80 .scope module, "d0" "D_latch" 2 12, 3 4 0, S_0000019b76a6c820;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "D";
+    .port_info 1 /INPUT 1 "enable";
+    .port_info 2 /OUTPUT 1 "Qbar";
+    .port_info 3 /OUTPUT 1 "Q";
+L_0000019b76a6ba10 .functor AND 1, v0000019b76a82ee0_0, v0000019b76b00ee0_0, C4<1>, C4<1>;
+L_0000019b76a6dfe0 .functor NOT 1, v0000019b76a82ee0_0, C4<0>, C4<0>, C4<0>;
+L_0000019b76a82f80 .functor AND 1, L_0000019b76a6dfe0, v0000019b76b00ee0_0, C4<1>, C4<1>;
+v0000019b76a6b970_0 .net "D", 0 0, v0000019b76a82ee0_0;  1 drivers
+v0000019b76ab61a0_0 .net "Q", 0 0, L_0000019b76a82ff0;  alias, 1 drivers
+v0000019b76ab6240_0 .net "Qbar", 0 0, L_0000019b76ab4150;  1 drivers
+v0000019b76a6c140_0 .net *"_ivl_2", 0 0, L_0000019b76a6dfe0;  1 drivers
+v0000019b76a6c1e0_0 .net "enable", 0 0, v0000019b76b00ee0_0;  1 drivers
+v0000019b76a82da0_0 .net "reset", 0 0, L_0000019b76a82f80;  1 drivers
+v0000019b76a82e40_0 .net "set", 0 0, L_0000019b76a6ba10;  1 drivers
+S_0000019b76ab6010 .scope module, "s0" "SR_Latch" 3 16, 4 2 0, S_0000019b76ab5e80;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "set";
+    .port_info 1 /INPUT 1 "reset";
+    .port_info 2 /OUTPUT 1 "Q";
+    .port_info 3 /OUTPUT 1 "Qn";
+L_0000019b76a82ff0 .functor NOR 1, L_0000019b76a82f80, L_0000019b76ab4150, C4<0>, C4<0>;
+L_0000019b76ab4150 .functor NOR 1, L_0000019b76a6ba10, L_0000019b76a82ff0, C4<0>, C4<0>;
+v0000019b76a83620_0 .net "Q", 0 0, L_0000019b76a82ff0;  alias, 1 drivers
+v0000019b76a83400_0 .net "Qn", 0 0, L_0000019b76ab4150;  alias, 1 drivers
+v0000019b76a6cd00_0 .net "reset", 0 0, L_0000019b76a82f80;  alias, 1 drivers
+v0000019b76a6c9b0_0 .net "set", 0 0, L_0000019b76a6ba10;  alias, 1 drivers
+    .scope S_0000019b76a6c820;
+T_0 ;
+    %vpi_call 2 17 "$dumpfile", "D_latch.vcd" {0 0 0};
+    %vpi_call 2 18 "$dumpvars", 32'sb00000000000000000000000000000000, S_0000019b76a6c820 {0 0 0};
+    %vpi_call 2 21 "$display", "Testing the D Latch" {0 0 0};
+    %vpi_call 2 22 "$monitor", "D:%b, EN:%b, Out:%d", v0000019b76a82ee0_0, v0000019b76b00ee0_0, v0000019b76b00bc0_0 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000019b76a82ee0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000019b76b00ee0_0, 0, 1;
+    %delay 5, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000019b76a82ee0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000019b76b00ee0_0, 0, 1;
+    %delay 5, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000019b76a82ee0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000019b76b00ee0_0, 0, 1;
+    %delay 5, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000019b76a82ee0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000019b76b00ee0_0, 0, 1;
+    %delay 5, 0;
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "D_Latch_tb.v";
+    "./D_latch.v";
+    "./../SR_Latch/SR_Latch.v";

@@ -1,16 +1,17 @@
 # Learning FPGA Dev
 
 RTL building blocks I am writing from scratch in Verilog, on the way to a single cycle processor
-core running a custom ISA. Combinational/ has the blocks that are just logic, Sequential/ is
-where the clocked stuff goes once I get there. Each folder inside them is one piece of the
-datapath with its design file, a testbench for it, and usually a waveform dump.
+core running a custom ISA. Combinational/ has the blocks that are just logic and Sequential/ has
+the ones that hold state. Each folder inside them is one piece of the datapath with its design
+file, a testbench for it, and usually a waveform dump.
 
 Everything is simulated with Icarus Verilog and viewed in GTKWave out of the OSS CAD Suite. Once
 the core is together the plan is to take it through logic synthesis and place and route with
 Yosys and nextpnr.
 
 Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
-ALU has a testbench of its own. Sequential/ is phase 2 and it is empty for now.
+ALU has a testbench of its own. Phase 2 is sequential and it has started, latches and a flip flop
+so far.
 
 ## Running a testbench
 
@@ -25,7 +26,8 @@ gtkwave n_decoder_tb.vcd
 ```
 
 You only pass the testbench to iverilog, it already includes the design file it needs. Same thing
-for every other folder, just swap in that testbench name.
+for every other folder, just swap in that testbench name. The Flip Flop folder has a space in it,
+so put quotes around it when you cd in.
 
 Every module sits at the same depth on purpose, so the .. in the includes always points at the
 folder holding all of them and the same two commands work everywhere, ALU included.
@@ -35,8 +37,9 @@ commands above make them again.
 
 ## The ALU
 
-`Combinational/ALU/ALU.v`, 8 bits wide, and this is where phase 1 ends up. A 3 bit op picks the operation, add and
-sub go through the add_sub unit and the logic ops are done right there in the case.
+`Combinational/ALU/ALU.v`, 8 bits wide, and this is where phase 1 ends up. A 3 bit op picks the
+operation, add and sub go through the add_sub unit and the logic ops are done right there in the
+case.
 
 | op | operation |
 | --- | --- |
@@ -60,7 +63,7 @@ Four flags come out with the result:
 carry and overflow both come off the add_sub path, so they only really mean anything on ADD and
 SUB. The logic ops leave whatever the adder happened to produce sitting on them.
 
-## The building blocks
+## Combinational blocks
 
 All of these live in Combinational/. In the order I did them, since most of them build on the
 one before it.
@@ -80,6 +83,17 @@ one before it.
 | barrel_shifter | `barrel_shifter` | `barrelshifter_tb.v` | 8 bit left shifter for a shift amount of 0 to 7. Three stages of muxes that shift by 1, 2 and 4, so any amount is just the right combination of the three stages instead of a separate shifter per amount. Not wired into the ALU yet. |
 | ALU | `ALU` | `alu_tb.v` | Everything above tied together behind a 3 bit op. Written up properly further up. |
 
+## Sequential blocks
+
+All of these live in Sequential/. Same idea as the combinational ones, each one is built out of
+the one before it.
+
+| Folder | Module | Testbench | What it does |
+| --- | --- | --- | --- |
+| SR_Latch | `SR_Latch` | `SR_Latch_tb.v` | Two cross coupled NOR gates, written with gate primitives instead of an assign. Set pulls Q high, reset pulls it low, and with both at 0 it holds whatever it had. Both at 1 is the invalid state so I stay away from it. |
+| D | `D_latch` | `D_Latch_tb.v` | The SR latch with a gate in front of it. set is D & enable and reset is ~D & enable, so they can never both be 1 and the invalid state is gone. Q follows D while enable is high and holds when it drops. |
+| Flip Flop | `d_flip_flop` | `D_ff_tb.v` | Master slave, two D latches back to back. The master is open while clk is low and the slave opens when clk goes high, so Q only changes on the rising edge instead of following D the whole time. This is what the registers get built from. |
+
 ## Notes to self
 
 The testbenches mostly don't check themselves. They print with $monitor or $display and I compare
@@ -96,12 +110,17 @@ parameterized means I can pull the same modules into the datapath without rewrit
 is what add_sub does when it instantiates the ripple carry adder at N = 8. The units that are
 part of the datapath itself are just fixed at 8 bits since that is the width I am building to.
 
+None of the sequential blocks have a reset yet, so Q sits at x in simulation until something
+actually gets written into it. Fine for a single latch, but the registers are going to need one
+so the core starts up in a known state.
+
 ## What is next
 
 Fold the barrel shifter into the ALU as shift opcodes on the two unused op codes, since it is
 built and tested but nothing calls it yet.
 
-Then Sequential/, so flip flops and registers, and from there the register file.
+Then keep going in Sequential/. An 8 bit register out of D flip flops with a reset and a write
+enable, and from there the register file.
 
 After that the core itself. A minimal custom ISA of about 8 to 10 instructions, then a single
 cycle implementation wiring the datapath to a control unit built on the decoder. cocotb
