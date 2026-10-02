@@ -10,8 +10,8 @@ the core is together the plan is to take it through logic synthesis and place an
 Yosys and nextpnr.
 
 Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
-ALU has a testbench of its own. Phase 2 is sequential and it has started, latches and a flip flop
-so far.
+ALU has a testbench of its own. Phase 2 is sequential and it has started, the latches and the D,
+JK and T flip flops are done so far.
 
 ## Running a testbench
 
@@ -85,14 +85,16 @@ one before it.
 
 ## Sequential blocks
 
-All of these live in Sequential/. Same idea as the combinational ones, each one is built out of
-the one before it.
+All of these live in Sequential/. Same idea as the combinational ones, most of them are built
+out of the one before it. All three flip flops are in the Flip Flop folder.
 
 | Folder | Module | Testbench | What it does |
 | --- | --- | --- | --- |
 | SR_Latch | `SR_Latch` | `SR_Latch_tb.v` | Two cross coupled NOR gates, written with gate primitives instead of an assign. Set pulls Q high, reset pulls it low, and with both at 0 it holds whatever it had. Both at 1 is the invalid state so I stay away from it. |
 | D | `D_latch` | `D_Latch_tb.v` | The SR latch with a gate in front of it. set is D & enable and reset is ~D & enable, so they can never both be 1 and the invalid state is gone. Q follows D while enable is high and holds when it drops. |
 | Flip Flop | `d_flip_flop` | `D_ff_tb.v` | Master slave, two D latches back to back. The master is open while clk is low and the slave opens when clk goes high, so Q only changes on the rising edge instead of following D the whole time. This is what the registers get built from. |
+| Flip Flop | `jk_ff` | `jkff_tb.v` | This one I wrote behaviourally instead of out of gates, an always @(posedge clk) with a case on {J, K}. 00 holds, 01 clears, 10 sets and 11 toggles, so it is basically the SR latch with the invalid state turned into something useful. Has a synchronous reset. |
+| Flip Flop | `t_flip_flop` | `tff_tb.v` | Built on the D flip flop with an XOR in front, D = T ^ Q, so T = 1 flips Q every clock and T = 0 holds it. The reset is ANDed into D so Q gets pulled to 0 on the first edge instead of being stuck at x forever, since x XOR anything is still x. |
 
 ## Notes to self
 
@@ -110,9 +112,11 @@ parameterized means I can pull the same modules into the datapath without rewrit
 is what add_sub does when it instantiates the ripple carry adder at N = 8. The units that are
 part of the datapath itself are just fixed at 8 bits since that is the width I am building to.
 
-None of the sequential blocks have a reset yet, so Q sits at x in simulation until something
-actually gets written into it. Fine for a single latch, but the registers are going to need one
-so the core starts up in a known state.
+The latches and the D flip flop don't have a reset, so Q sits at x in simulation until something
+actually gets written into it. The JK and T ones do, both synchronous, so the reset only takes
+effect on a clock edge. The T flip flop is where this actually mattered, without the reset it
+never gets out of x. The registers are going to need one too so the core starts up in a known
+state.
 
 ## What is next
 
