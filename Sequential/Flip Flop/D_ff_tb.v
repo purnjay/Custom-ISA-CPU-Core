@@ -18,7 +18,6 @@ always #10 clk = ~clk;
 
 initial begin
     
-
     //Getting the waveforms
     $dumpfile("d_ff.vcd");
     $dumpvars(0, d_ff_tb);
