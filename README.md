@@ -10,8 +10,8 @@ the core is together the plan is to take it through logic synthesis and place an
 Yosys and nextpnr.
 
 Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
-ALU has a testbench of its own. Phase 2 is sequential and it has started, the latches and the D,
-JK and T flip flops are done so far.
+ALU has a testbench of its own. Phase 2 is sequential and it has started, the latches, the D, JK
+and T flip flops, and an N bit register are done so far.
 
 ## Running a testbench
 
@@ -95,6 +95,7 @@ out of the one before it. All three flip flops are in the Flip Flop folder.
 | Flip Flop | `d_flip_flop` | `D_ff_tb.v` | Master slave, two D latches back to back. The master is open while clk is low and the slave opens when clk goes high, so Q only changes on the rising edge instead of following D the whole time. This is what the registers get built from. |
 | Flip Flop | `jk_ff` | `jkff_tb.v` | This one I wrote behaviourally instead of out of gates, an always @(posedge clk) with a case on {J, K}. 00 holds, 01 clears, 10 sets and 11 toggles, so it is basically the SR latch with the invalid state turned into something useful. Has a synchronous reset. |
 | Flip Flop | `t_flip_flop` | `tff_tb.v` | Built on the D flip flop with an XOR in front, D = T ^ Q, so T = 1 flips Q every clock and T = 0 holds it. The reset is ANDed into D so Q gets pulled to 0 on the first edge instead of being stuck at x forever, since x XOR anything is still x. |
+| Register | `n_bit_register` | `n_bit_register_tb.v` | N bit register with a synchronous reset and a write enable, change the parameter to change the width. Written behaviourally like the JK one, an always @(posedge clk) where reset clears q, otherwise q takes d only when en is high, and with en low it just holds. Reset wins over enable. Tested at N = 4, and the register file is going to be a stack of these at N = 8. |
 
 ## Notes to self
 
@@ -115,16 +116,17 @@ part of the datapath itself are just fixed at 8 bits since that is the width I a
 The latches and the D flip flop don't have a reset, so Q sits at x in simulation until something
 actually gets written into it. The JK and T ones do, both synchronous, so the reset only takes
 effect on a clock edge. The T flip flop is where this actually mattered, without the reset it
-never gets out of x. The registers are going to need one too so the core starts up in a known
-state.
+never gets out of x. The register has one too, so once the register file is built out of it the
+core starts up in a known state.
 
 ## What is next
 
 Fold the barrel shifter into the ALU as shift opcodes on the two unused op codes, since it is
 built and tested but nothing calls it yet.
 
-Then keep going in Sequential/. An 8 bit register out of D flip flops with a reset and a write
-enable, and from there the register file.
+Then keep going in Sequential/. The register is done, so next is the register file, a set of
+8 bit registers with the decoder picking which one gets written and the muxes picking which ones
+get read out.
 
 After that the core itself. A minimal custom ISA of about 8 to 10 instructions, then a single
 cycle implementation wiring the datapath to a control unit built on the decoder. cocotb
