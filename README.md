@@ -71,17 +71,17 @@ one before it.
 | Folder | Module | Testbench | What it does |
 | --- | --- | --- | --- |
 | half_adder | `half_adder` | `half_adder_tb.v` | Sum is a XOR b, carry is a AND b. Simplest place to start. |
-| full_adder | `full_adder` | `full_adder_tb.v` | Two half adders with the two carries OR'd together. First time I made a module out of smaller modules instead of writing all the logic directly. |
-| ripple_carry_adder_N | `rcN_adder` | `ripple_carry_N_adder_tb.v` | N bit adder, change the parameter to change the width. A generate loop makes N full adders and the carry chain runs through a wire [N:0] connecting each one to the next. Tested at N = 4, and the ALU runs it at N = 8. |
-| muxes | `mux_2to1`, `mux_4to1`, `mux_8to1` | `muxstb.v` | 2 to 1 is just a ternary in an assign, the 4 to 1 and 8 to 1 use a case inside always @(*). These are what pick register file read ports later on. |
-| demuxes | `dmux_1to2`, `dmux_1to4`, `dmux_1to8` | `demux_tb.v` | Built these out of each other. The 1 to 4 is three 1 to 2 demuxes, and the 1 to 8 is a 1 to 2 feeding two 1 to 4s. Had to add ifndef include guards so the shared files don't get included twice. |
-| decoders | `n_decoder` | `n_decoder_tb.v` | N to 2^N decoder. Instead of writing out the whole truth table the output is just 1 << in, which gives the one hot output. Tested as a 2 to 4. The register file write port and instruction decode both need this. |
-| encoders | `_encoder8to3` | `encoder_tb.v` | Plain 8 to 3 encoder, just OR gates on the input bits. Only works if the input is one hot, it can't tell an input of 0 from an input of 1 because both come out as 000. |
-| encoders | `priorityEn8_3` | `priority_tb.v` | Priority encoder I did after, to fix that. casez with ? wildcards grabs the highest set bit, so an input with several bits set still gives a sensible answer. |
-| comparator | `mag_comp_N` | `mag_comp_tb.v` | N bit magnitude comparator with three outputs for a < b, a == b and a > b. Tested at N = 4. The branch conditions in the ISA come off of this. |
-| add_sub | `add_sub` | `add_sub_tb.v` | 8 bit add and subtract in one unit, sel picks which (0 adds, 1 subtracts). Subtracting works by XOR'ing b with sel to flip it and feeding sel in as the carry in, so it is twos complement through the same ripple carry adder instead of a separate subtractor. Puts out signed overflow and the carry out for the ALU to use. |
-| barrel_shifter | `barrel_shifter` | `barrelshifter_tb.v` | 8 bit left shifter for a shift amount of 0 to 7. Three stages of muxes that shift by 1, 2 and 4, so any amount is just the right combination of the three stages instead of a separate shifter per amount. Not wired into the ALU yet. |
-| ALU | `ALU` | `alu_tb.v` | Everything above tied together behind a 3 bit op. Written up properly further up. |
+| full_adder | `full_adder` | `full_adder_tb.v` | Made out of two half adders, the two carries get OR'd for the carry out. |
+| ripple_carry_adder_N | `rcN_adder` | `ripple_carry_N_adder_tb.v` | N bit adder. A generate loop makes N full adders and the carry from each one goes into the next. Change N to change the width. |
+| muxes | `mux_2to1`, `mux_4to1`, `mux_8to1` | `muxstb.v` | 2 to 1 uses a ternary, 4 to 1 and 8 to 1 use a case statement. |
+| demuxes | `dmux_1to2`, `dmux_1to4`, `dmux_1to8` | `demux_tb.v` | 1 to 4 is made from three 1 to 2 demuxes, 1 to 8 is a 1 to 2 and two 1 to 4s. Needed ifndef guards so the files don't get included twice. |
+| decoders | `n_decoder` | `n_decoder_tb.v` | N to 2^N decoder, the output is just 1 << in. |
+| encoders | `_encoder8to3` | `encoder_tb.v` | 8 to 3 encoder using OR gates. Only works with one hot inputs, an input of 0 and an input of 1 both give 000. |
+| encoders | `priorityEn8_3` | `priority_tb.v` | Priority encoder using casez, outputs the index of the highest bit that is set. |
+| comparator | `mag_comp_N` | `mag_comp_tb.v` | N bit comparator with outputs for a < b, a == b and a > b. |
+| add_sub | `add_sub` | `add_sub_tb.v` | 8 bit adder/subtractor using the ripple carry adder. sel = 0 adds, sel = 1 XORs b and sets the carry in to 1 to subtract. Also outputs overflow and carry out. |
+| barrel_shifter | `barrel_shifter` | `barrelshifter_tb.v` | 8 bit left shift by 0 to 7, done in three stages that shift by 1, 2 and 4. |
+| ALU | `ALU` | `alu_tb.v` | Puts everything above together, the opcodes are in the ALU section. |
 
 ## Sequential blocks
 
@@ -90,13 +90,13 @@ out of the one before it. All three flip flops are in the Flip Flop folder.
 
 | Folder | Module | Testbench | What it does |
 | --- | --- | --- | --- |
-| SR_Latch | `SR_Latch` | `SR_Latch_tb.v` | Two cross coupled NOR gates, written with gate primitives instead of an assign. Set pulls Q high, reset pulls it low, and with both at 0 it holds whatever it had. Both at 1 is the invalid state so I stay away from it. |
-| D | `D_latch` | `D_Latch_tb.v` | The SR latch with a gate in front of it. set is D & enable and reset is ~D & enable, so they can never both be 1 and the invalid state is gone. Q follows D while enable is high and holds when it drops. |
-| Flip Flop | `d_flip_flop` | `D_ff_tb.v` | Master slave, two D latches back to back. The master is open while clk is low and the slave opens when clk goes high, so Q only changes on the rising edge instead of following D the whole time. This is what the registers get built from. |
-| Flip Flop | `jk_ff` | `jkff_tb.v` | This one I wrote behaviourally instead of out of gates, an always @(posedge clk) with a case on {J, K}. 00 holds, 01 clears, 10 sets and 11 toggles, so it is basically the SR latch with the invalid state turned into something useful. Has a synchronous reset. |
-| Flip Flop | `t_flip_flop` | `tff_tb.v` | Built on the D flip flop with an XOR in front, D = T ^ Q, so T = 1 flips Q every clock and T = 0 holds it. The reset is ANDed into D so Q gets pulled to 0 on the first edge instead of being stuck at x forever, since x XOR anything is still x. |
-| Register | `n_bit_register` | `n_bit_register_tb.v` | N bit register with a synchronous reset and a write enable, change the parameter to change the width. Written behaviourally like the JK one, an always @(posedge clk) where reset clears q, otherwise q takes d only when en is high, and with en low it just holds. Reset wins over enable. Tested at N = 4, and the register file is going to be a stack of these at N = 8. |
-| Shift Registers | `SISO` | `SISO_tb.v` | Serial in serial out shift register, N bits long. Every clock the whole thing shifts over by one with {shift_reg[N-2:0], d}, so a bit goes in at the bottom and comes out of q at the top N clocks later. At N = 1 it is just a D flip flop so that case is handled on its own. Tested at N = 4, where a single 1 comes out of q four clocks after it goes in. |
+| SR_Latch | `SR_Latch` | `SR_Latch_tb.v` | Two NOR gates feeding into each other. s = r = 1 isn't allowed. |
+| D | `D_latch` | `D_Latch_tb.v` | SR latch with set = D & enable and reset = ~D & enable, so S and R are always opposite. |
+| Flip Flop | `d_flip_flop` | `D_ff_tb.v` | Two D latches as master and slave, the master is enabled on ~clk and the slave on clk. |
+| Flip Flop | `jk_ff` | `jkff_tb.v` | Case on {J, K}, 00 holds, 01 resets, 10 sets and 11 toggles. Has a synchronous reset. |
+| Flip Flop | `t_flip_flop` | `tff_tb.v` | D flip flop with D = T ^ Q. Needed a reset or Q stays stuck at x. |
+| Register | `n_bit_register` | `n_bit_register_tb.v` | N bit register with rst and en. If rst is high q goes to 0, if en is high q takes d, otherwise it holds. |
+| Shift Registers | `SISO` | `SISO_tb.v` | Serial in serial out shift register, shifts d in every clock and q is the last bit. At N = 1 it is just a D flip flop. |
 
 ## Notes to self
 
