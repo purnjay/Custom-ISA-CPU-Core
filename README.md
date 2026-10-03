@@ -11,7 +11,7 @@ Yosys and nextpnr.
 
 Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
 ALU has a testbench of its own. Phase 2 is sequential and it has started, the latches, the D, JK
-and T flip flops, and an N bit register are done so far.
+and T flip flops, an N bit register and a serial in serial out shift register are done so far.
 
 ## Running a testbench
 
@@ -96,6 +96,7 @@ out of the one before it. All three flip flops are in the Flip Flop folder.
 | Flip Flop | `jk_ff` | `jkff_tb.v` | This one I wrote behaviourally instead of out of gates, an always @(posedge clk) with a case on {J, K}. 00 holds, 01 clears, 10 sets and 11 toggles, so it is basically the SR latch with the invalid state turned into something useful. Has a synchronous reset. |
 | Flip Flop | `t_flip_flop` | `tff_tb.v` | Built on the D flip flop with an XOR in front, D = T ^ Q, so T = 1 flips Q every clock and T = 0 holds it. The reset is ANDed into D so Q gets pulled to 0 on the first edge instead of being stuck at x forever, since x XOR anything is still x. |
 | Register | `n_bit_register` | `n_bit_register_tb.v` | N bit register with a synchronous reset and a write enable, change the parameter to change the width. Written behaviourally like the JK one, an always @(posedge clk) where reset clears q, otherwise q takes d only when en is high, and with en low it just holds. Reset wins over enable. Tested at N = 4, and the register file is going to be a stack of these at N = 8. |
+| Shift Registers | `SISO` | `SISO_tb.v` | Serial in serial out shift register, N bits long. Every clock the whole thing shifts over by one with {shift_reg[N-2:0], d}, so a bit goes in at the bottom and comes out of q at the top N clocks later. At N = 1 it is just a D flip flop so that case is handled on its own. Tested at N = 4, where a single 1 comes out of q four clocks after it goes in. |
 
 ## Notes to self
 
