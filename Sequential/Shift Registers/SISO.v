@@ -4,7 +4,8 @@ module SISO #(parameter N = 1)(
     input d,
     input clk,
     input rst,
-    output q
+    output q,
+    output [N-1:0] shift_reg_out
 );
 
 reg [N-1:0] shift_reg;
@@ -19,5 +20,5 @@ always @(posedge clk) begin
 end
 
 assign q = shift_reg[N-1]; // assign the q as the value of the last shift reg
-
+assign shift_reg_out = shift_reg; // assign the output register values
 endmodule

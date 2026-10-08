@@ -1,5 +1,5 @@
 $date
-	Sat Oct 03 15:48:08 2026
+	Mon Oct 05 15:29:22 2026
 $end
 $version
 	Icarus Verilog
@@ -17,20 +17,22 @@ $scope module s0 $end
 $var wire 1 $ clk $end
 $var wire 1 # d $end
 $var wire 1 % rst $end
+$var wire 4 & shift_reg_out [3:0] $end
 $var wire 1 ! q $end
-$var parameter 32 & N $end
-$var reg 4 ' shift_reg [3:0] $end
+$var parameter 32 ' N $end
+$var reg 4 ( shift_reg [3:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b100 &
+b100 '
 b100 "
 $end
 #0
 $dumpvars
-bx '
+bx (
+bx &
 1%
 0$
 0#
@@ -38,7 +40,8 @@ x!
 $end
 #10000
 0!
-b0 '
+b0 &
+b0 (
 1$
 #20000
 0$
@@ -53,30 +56,35 @@ b0 '
 0$
 1#
 #70000
-b1 '
+b1 &
+b1 (
 1$
 #80000
 0$
 0#
 #90000
-b10 '
+b10 &
+b10 (
 1$
 #100000
 0$
 #110000
-b100 '
+b100 &
+b100 (
 1$
 #120000
 0$
 #130000
 1!
-b1000 '
+b1000 &
+b1000 (
 1$
 #140000
 0$
 #150000
 0!
-b0 '
+b0 &
+b0 (
 1$
 #160000
 0$

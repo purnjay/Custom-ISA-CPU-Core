@@ -1,0 +1,137 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_0000021a0f24b760 .scope module, "BDSR_tb" "BDSR_tb" 2 5;
+ .timescale -9 -12;
+v0000021a0f262f40_0 .var "clk", 0 0;
+v0000021a0f262fe0_0 .var "d", 0 0;
+v0000021a0f263080_0 .var "dir", 0 0;
+v0000021a0f263120_0 .net "q", 0 0, L_0000021a0f292c30;  1 drivers
+v0000021a0f292a00_0 .var "rst", 0 0;
+S_0000021a0f24bb00 .scope module, "bdsr0" "BDSR" 2 19, 3 3 0, S_0000021a0f24b760;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "rst";
+    .port_info 2 /INPUT 1 "R_Lshift";
+    .port_info 3 /INPUT 1 "d";
+    .port_info 4 /OUTPUT 1 "q";
+P_0000021a0f286070 .param/l "N" 0 3 3, +C4<00000000000000000000000000000100>;
+v0000021a0f24c4f0_0 .net "R_Lshift", 0 0, v0000021a0f263080_0;  1 drivers
+v0000021a0f24bc90_0 .net *"_ivl_1", 0 0, L_0000021a0f293130;  1 drivers
+v0000021a0f24bd30_0 .net *"_ivl_3", 0 0, L_0000021a0f2938b0;  1 drivers
+v0000021a0f24b480_0 .net "clk", 0 0, v0000021a0f262f40_0;  1 drivers
+v0000021a0f24b520_0 .net "d", 0 0, v0000021a0f262fe0_0;  1 drivers
+v0000021a0f262d60_0 .net "q", 0 0, L_0000021a0f292c30;  alias, 1 drivers
+v0000021a0f262e00_0 .net "rst", 0 0, v0000021a0f292a00_0;  1 drivers
+v0000021a0f262ea0_0 .var "shift_reg", 3 0;
+E_0000021a0f2867f0 .event posedge, v0000021a0f24b480_0;
+L_0000021a0f293130 .part v0000021a0f262ea0_0, 0, 1;
+L_0000021a0f2938b0 .part v0000021a0f262ea0_0, 3, 1;
+L_0000021a0f292c30 .functor MUXZ 1, L_0000021a0f2938b0, L_0000021a0f293130, v0000021a0f263080_0, C4<>;
+    .scope S_0000021a0f24bb00;
+T_0 ;
+    %wait E_0000021a0f2867f0;
+    %load/vec4 v0000021a0f262e00_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 0, 0, 4;
+    %assign/vec4 v0000021a0f262ea0_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0000021a0f24c4f0_0;
+    %nor/r;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.2, 8;
+    %load/vec4 v0000021a0f262ea0_0;
+    %parti/s 3, 0, 2;
+    %load/vec4 v0000021a0f24b520_0;
+    %concat/vec4; draw_concat_vec4
+    %assign/vec4 v0000021a0f262ea0_0, 0;
+    %jmp T_0.3;
+T_0.2 ;
+    %load/vec4 v0000021a0f24b520_0;
+    %load/vec4 v0000021a0f262ea0_0;
+    %parti/s 3, 1, 2;
+    %concat/vec4; draw_concat_vec4
+    %assign/vec4 v0000021a0f262ea0_0, 0;
+T_0.3 ;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0000021a0f24b760;
+T_1 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f262f40_0, 0, 1;
+    %end;
+    .thread T_1;
+    .scope S_0000021a0f24b760;
+T_2 ;
+    %delay 10000, 0;
+    %load/vec4 v0000021a0f262f40_0;
+    %inv;
+    %store/vec4 v0000021a0f262f40_0, 0, 1;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0000021a0f24b760;
+T_3 ;
+    %vpi_call 2 24 "$dumpfile", "BDSR_tb.vcd" {0 0 0};
+    %vpi_call 2 25 "$dumpvars", 32'sb00000000000000000000000000000000, S_0000021a0f24b760 {0 0 0};
+    %vpi_call 2 28 "$display", "BDSR Testbench" {0 0 0};
+    %vpi_call 2 29 "$monitor", "rst=%b dir=%b d=%b q=%b", v0000021a0f292a00_0, v0000021a0f263080_0, v0000021a0f262fe0_0, v0000021a0f263120_0 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f292a00_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f263080_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f262fe0_0, 0, 1;
+    %delay 20000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f292a00_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f263080_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f262fe0_0, 0, 1;
+    %delay 20000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f292a00_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f263080_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f262fe0_0, 0, 1;
+    %delay 20000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f292a00_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f263080_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f262fe0_0, 0, 1;
+    %delay 80000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f292a00_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f263080_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f262fe0_0, 0, 1;
+    %delay 20000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021a0f292a00_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f263080_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021a0f262fe0_0, 0, 1;
+    %delay 20000, 0;
+    %vpi_call 2 44 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "BDSR_tb.v";
+    "./BDSR.v";

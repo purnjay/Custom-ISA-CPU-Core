@@ -11,7 +11,8 @@ Yosys and nextpnr.
 
 Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
 ALU has a testbench of its own. Phase 2 is sequential and it has started, the latches, the D, JK
-and T flip flops, an N bit register and a serial in serial out shift register are done so far.
+and T flip flops, an N bit register, the SISO, SIPO, PISO and PIPO shift registers, a
+bi-directional shift register, and up/down, ring and Johnson counters are done so far.
 
 ## Running a testbench
 
@@ -97,6 +98,13 @@ out of the one before it. All three flip flops are in the Flip Flop folder.
 | Flip Flop | `t_flip_flop` | `tff_tb.v` | D flip flop with D = T ^ Q. Needed a reset or Q stays stuck at x. |
 | Register | `n_bit_register` | `n_bit_register_tb.v` | N bit register with rst and en. If rst is high q goes to 0, if en is high q takes d, otherwise it holds. |
 | Shift Registers | `SISO` | `SISO_tb.v` | Serial in serial out shift register, shifts d in every clock and q is the last bit. At N = 1 it is just a D flip flop. |
+| Shift Registers | `SIPO` | `SIPO_tb.v` | Serial in parallel out, uses the SISO module but outputs all N bits at once. |
+| Shift Registers | `PISO` | `PISO_tb.v` | Parallel in serial out, made from 1 bit registers. SH_LD = 0 loads d, SH_LD = 1 shifts it out of q one bit at a time. |
+| Shift Registers | `PIPO` | none yet | Parallel in parallel out, q takes all of d every clock. Same as the register without en. |
+| Bi_directionalShiftReg | `BDSR` | `BDSR_tb.v` | Bi-directional shift register, R_Lshift = 0 shifts left and 1 shifts right. q is the bit at whichever end it is shifting towards. |
+| Counters | `counter_up_down` | `counter_tb.v` | N bit up/down counter, dir = 1 counts up and dir = 0 counts down. |
+| Counters | `ring_counter` | `ring_counter_tb.v` | Ring counter, preset puts a 1 in the first flip flop and then it goes around, 0001, 0010, 0100, 1000 and back. |
+| Counters | `johnson_counter` | `jc_tb.v` | Johnson counter, same as the ring counter but the last bit gets inverted when it goes back to the start. 4 bits gives 8 states. |
 
 ## Notes to self
 
@@ -119,6 +127,12 @@ actually gets written into it. The JK and T ones do, both synchronous, so the re
 effect on a clock edge. The T flip flop is where this actually mattered, without the reset it
 never gets out of x. The register has one too, so once the register file is built out of it the
 core starts up in a known state.
+
+Any testbench with a clock needs a $finish. The clock always has another edge coming so the sim
+never stops on its own, and with $dumpvars on it just keeps writing the vcd. I forgot it on an
+early version of the BDSR testbench and the vcd got to 161 GB and filled my drive. The
+testbenches without a clock stop by themselves once nothing else is left to happen, which is why
+this never came up before.
 
 ## What is next
 
