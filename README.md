@@ -12,7 +12,8 @@ Yosys and nextpnr.
 Phase 1 is done. All the combinational blocks are built, they come together in the ALU, and the
 ALU has a testbench of its own. Phase 2 is sequential and it has started, the latches, the D, JK
 and T flip flops, an N bit register, the SISO, SIPO, PISO and PIPO shift registers, a
-bi-directional shift register, and up/down, ring and Johnson counters are done so far.
+bi-directional shift register, and up/down, ring, Johnson and mod N counters are done so far.
+The register file is built, it just needs a testbench.
 
 ## Running a testbench
 
@@ -105,6 +106,8 @@ out of the one before it. All three flip flops are in the Flip Flop folder.
 | Counters | `counter_up_down` | `counter_tb.v` | N bit up/down counter, dir = 1 counts up and dir = 0 counts down. |
 | Counters | `ring_counter` | `ring_counter_tb.v` | Ring counter, preset puts a 1 in the first flip flop and then it goes around, 0001, 0010, 0100, 1000 and back. |
 | Counters | `johnson_counter` | `jc_tb.v` | Johnson counter, same as the ring counter but the last bit gets inverted when it goes back to the start. 4 bits gives 8 states. |
+| Counters | `mod_n_counter` | `modn_tb.v` | Counts from 0 up to N-1 and then goes back to 0. The width is $clog2(N) so it is only as wide as it needs to be. |
+| Capstone_Register | `REGISTER` | none yet | Register file, 8 registers of 8 bits made from the N bit register, the decoder picks which one gets written and there are two read ports. Reading address 0 always gives 0. |
 
 ## Notes to self
 
@@ -139,9 +142,8 @@ this never came up before.
 Fold the barrel shifter into the ALU as shift opcodes on the two unused op codes, since it is
 built and tested but nothing calls it yet.
 
-Then keep going in Sequential/. The register is done, so next is the register file, a set of
-8 bit registers with the decoder picking which one gets written and the muxes picking which ones
-get read out.
+Then keep going in Sequential/. The register file in Capstone_Register is built, next it needs a
+testbench of its own.
 
 After that the core itself. A minimal custom ISA of about 8 to 10 instructions, then a single
 cycle implementation wiring the datapath to a control unit built on the decoder. cocotb
