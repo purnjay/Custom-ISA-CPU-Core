@@ -1,0 +1,755 @@
+$date
+	Fri Oct 09 22:48:55 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module register_tb $end
+$var wire 32 ! read_dataB [31:0] $end
+$var wire 32 " read_dataA [31:0] $end
+$var parameter 32 # WIDTH $end
+$var parameter 32 $ noOfRegs $end
+$var reg 1 % clk $end
+$var reg 5 & read_addrA [4:0] $end
+$var reg 5 ' read_addrB [4:0] $end
+$var reg 1 ( rst $end
+$var reg 5 ) write_addr [4:0] $end
+$var reg 32 * write_data [31:0] $end
+$var reg 1 + write_en $end
+$scope module r0 $end
+$var wire 1 % clk $end
+$var wire 32 , data_in [31:0] $end
+$var wire 5 - rAddrA [4:0] $end
+$var wire 5 . rAddrB [4:0] $end
+$var wire 1 ( rst $end
+$var wire 5 / writeAddr [4:0] $end
+$var wire 1 + write_en $end
+$var wire 32 0 write_en_signals [31:0] $end
+$var wire 32 1 rDataB [31:0] $end
+$var wire 32 2 rDataA [31:0] $end
+$var wire 32 3 decode [31:0] $end
+$var parameter 32 4 WIDTH $end
+$var parameter 32 5 noOfRegs $end
+$scope begin reg_block[0] $end
+$var parameter 2 6 i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 7 d [31:0] $end
+$var wire 1 8 en $end
+$var wire 1 ( rst $end
+$var parameter 32 9 N $end
+$var reg 32 : q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[1] $end
+$var parameter 2 ; i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 < d [31:0] $end
+$var wire 1 = en $end
+$var wire 1 ( rst $end
+$var parameter 32 > N $end
+$var reg 32 ? q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[2] $end
+$var parameter 3 @ i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 A d [31:0] $end
+$var wire 1 B en $end
+$var wire 1 ( rst $end
+$var parameter 32 C N $end
+$var reg 32 D q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[3] $end
+$var parameter 3 E i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 F d [31:0] $end
+$var wire 1 G en $end
+$var wire 1 ( rst $end
+$var parameter 32 H N $end
+$var reg 32 I q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[4] $end
+$var parameter 4 J i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 K d [31:0] $end
+$var wire 1 L en $end
+$var wire 1 ( rst $end
+$var parameter 32 M N $end
+$var reg 32 N q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[5] $end
+$var parameter 4 O i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 P d [31:0] $end
+$var wire 1 Q en $end
+$var wire 1 ( rst $end
+$var parameter 32 R N $end
+$var reg 32 S q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[6] $end
+$var parameter 4 T i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 U d [31:0] $end
+$var wire 1 V en $end
+$var wire 1 ( rst $end
+$var parameter 32 W N $end
+$var reg 32 X q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[7] $end
+$var parameter 4 Y i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 Z d [31:0] $end
+$var wire 1 [ en $end
+$var wire 1 ( rst $end
+$var parameter 32 \ N $end
+$var reg 32 ] q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[8] $end
+$var parameter 5 ^ i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 _ d [31:0] $end
+$var wire 1 ` en $end
+$var wire 1 ( rst $end
+$var parameter 32 a N $end
+$var reg 32 b q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[9] $end
+$var parameter 5 c i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 d d [31:0] $end
+$var wire 1 e en $end
+$var wire 1 ( rst $end
+$var parameter 32 f N $end
+$var reg 32 g q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[10] $end
+$var parameter 5 h i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 i d [31:0] $end
+$var wire 1 j en $end
+$var wire 1 ( rst $end
+$var parameter 32 k N $end
+$var reg 32 l q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[11] $end
+$var parameter 5 m i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 n d [31:0] $end
+$var wire 1 o en $end
+$var wire 1 ( rst $end
+$var parameter 32 p N $end
+$var reg 32 q q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[12] $end
+$var parameter 5 r i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 s d [31:0] $end
+$var wire 1 t en $end
+$var wire 1 ( rst $end
+$var parameter 32 u N $end
+$var reg 32 v q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[13] $end
+$var parameter 5 w i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 x d [31:0] $end
+$var wire 1 y en $end
+$var wire 1 ( rst $end
+$var parameter 32 z N $end
+$var reg 32 { q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[14] $end
+$var parameter 5 | i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 } d [31:0] $end
+$var wire 1 ~ en $end
+$var wire 1 ( rst $end
+$var parameter 32 !" N $end
+$var reg 32 "" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[15] $end
+$var parameter 5 #" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 $" d [31:0] $end
+$var wire 1 %" en $end
+$var wire 1 ( rst $end
+$var parameter 32 &" N $end
+$var reg 32 '" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[16] $end
+$var parameter 6 (" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 )" d [31:0] $end
+$var wire 1 *" en $end
+$var wire 1 ( rst $end
+$var parameter 32 +" N $end
+$var reg 32 ," q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[17] $end
+$var parameter 6 -" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 ." d [31:0] $end
+$var wire 1 /" en $end
+$var wire 1 ( rst $end
+$var parameter 32 0" N $end
+$var reg 32 1" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[18] $end
+$var parameter 6 2" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 3" d [31:0] $end
+$var wire 1 4" en $end
+$var wire 1 ( rst $end
+$var parameter 32 5" N $end
+$var reg 32 6" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[19] $end
+$var parameter 6 7" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 8" d [31:0] $end
+$var wire 1 9" en $end
+$var wire 1 ( rst $end
+$var parameter 32 :" N $end
+$var reg 32 ;" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[20] $end
+$var parameter 6 <" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 =" d [31:0] $end
+$var wire 1 >" en $end
+$var wire 1 ( rst $end
+$var parameter 32 ?" N $end
+$var reg 32 @" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[21] $end
+$var parameter 6 A" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 B" d [31:0] $end
+$var wire 1 C" en $end
+$var wire 1 ( rst $end
+$var parameter 32 D" N $end
+$var reg 32 E" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[22] $end
+$var parameter 6 F" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 G" d [31:0] $end
+$var wire 1 H" en $end
+$var wire 1 ( rst $end
+$var parameter 32 I" N $end
+$var reg 32 J" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[23] $end
+$var parameter 6 K" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 L" d [31:0] $end
+$var wire 1 M" en $end
+$var wire 1 ( rst $end
+$var parameter 32 N" N $end
+$var reg 32 O" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[24] $end
+$var parameter 6 P" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 Q" d [31:0] $end
+$var wire 1 R" en $end
+$var wire 1 ( rst $end
+$var parameter 32 S" N $end
+$var reg 32 T" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[25] $end
+$var parameter 6 U" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 V" d [31:0] $end
+$var wire 1 W" en $end
+$var wire 1 ( rst $end
+$var parameter 32 X" N $end
+$var reg 32 Y" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[26] $end
+$var parameter 6 Z" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 [" d [31:0] $end
+$var wire 1 \" en $end
+$var wire 1 ( rst $end
+$var parameter 32 ]" N $end
+$var reg 32 ^" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[27] $end
+$var parameter 6 _" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 `" d [31:0] $end
+$var wire 1 a" en $end
+$var wire 1 ( rst $end
+$var parameter 32 b" N $end
+$var reg 32 c" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[28] $end
+$var parameter 6 d" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 e" d [31:0] $end
+$var wire 1 f" en $end
+$var wire 1 ( rst $end
+$var parameter 32 g" N $end
+$var reg 32 h" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[29] $end
+$var parameter 6 i" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 j" d [31:0] $end
+$var wire 1 k" en $end
+$var wire 1 ( rst $end
+$var parameter 32 l" N $end
+$var reg 32 m" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[30] $end
+$var parameter 6 n" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 o" d [31:0] $end
+$var wire 1 p" en $end
+$var wire 1 ( rst $end
+$var parameter 32 q" N $end
+$var reg 32 r" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin reg_block[31] $end
+$var parameter 6 s" i $end
+$scope module regs $end
+$var wire 1 % clk $end
+$var wire 32 t" d [31:0] $end
+$var wire 1 u" en $end
+$var wire 1 ( rst $end
+$var parameter 32 v" N $end
+$var reg 32 w" q [31:0] $end
+$upscope $end
+$upscope $end
+$scope module write_decoder $end
+$var wire 5 x" in [4:0] $end
+$var parameter 32 y" N $end
+$var reg 32 z" out [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b101 y"
+b100000 v"
+b11111 s"
+b100000 q"
+b11110 n"
+b100000 l"
+b11101 i"
+b100000 g"
+b11100 d"
+b100000 b"
+b11011 _"
+b100000 ]"
+b11010 Z"
+b100000 X"
+b11001 U"
+b100000 S"
+b11000 P"
+b100000 N"
+b10111 K"
+b100000 I"
+b10110 F"
+b100000 D"
+b10101 A"
+b100000 ?"
+b10100 <"
+b100000 :"
+b10011 7"
+b100000 5"
+b10010 2"
+b100000 0"
+b10001 -"
+b100000 +"
+b10000 ("
+b100000 &"
+b1111 #"
+b100000 !"
+b1110 |
+b100000 z
+b1101 w
+b100000 u
+b1100 r
+b100000 p
+b1011 m
+b100000 k
+b1010 h
+b100000 f
+b1001 c
+b100000 a
+b1000 ^
+b100000 \
+b111 Y
+b100000 W
+b110 T
+b100000 R
+b101 O
+b100000 M
+b100 J
+b100000 H
+b11 E
+b100000 C
+b10 @
+b100000 >
+b1 ;
+b100000 9
+b0 6
+b100000 5
+b100000 4
+b100000 $
+b100000 #
+$end
+#0
+$dumpvars
+b1 z"
+b0 x"
+bx w"
+0u"
+b0 t"
+bx r"
+0p"
+b0 o"
+bx m"
+0k"
+b0 j"
+bx h"
+0f"
+b0 e"
+bx c"
+0a"
+b0 `"
+bx ^"
+0\"
+b0 ["
+bx Y"
+0W"
+b0 V"
+bx T"
+0R"
+b0 Q"
+bx O"
+0M"
+b0 L"
+bx J"
+0H"
+b0 G"
+bx E"
+0C"
+b0 B"
+bx @"
+0>"
+b0 ="
+bx ;"
+09"
+b0 8"
+bx 6"
+04"
+b0 3"
+bx 1"
+0/"
+b0 ."
+bx ,"
+0*"
+b0 )"
+bx '"
+0%"
+b0 $"
+bx ""
+0~
+b0 }
+bx {
+0y
+b0 x
+bx v
+0t
+b0 s
+bx q
+0o
+b0 n
+bx l
+0j
+b0 i
+bx g
+0e
+b0 d
+bx b
+0`
+b0 _
+bx ]
+0[
+b0 Z
+bx X
+0V
+b0 U
+bx S
+0Q
+b0 P
+bx N
+0L
+b0 K
+bx I
+0G
+b0 F
+bx D
+0B
+b0 A
+bx ?
+0=
+b0 <
+bx :
+08
+b0 7
+b1 3
+b0 2
+b0 1
+b0 0
+b0 /
+b0 .
+b0 -
+b0 ,
+0+
+b0 *
+b0 )
+1(
+b0 '
+b0 &
+0%
+b0 "
+b0 !
+$end
+#10000
+b0 :
+b0 ?
+b0 D
+b0 I
+b0 N
+b0 S
+b0 X
+b0 ]
+b0 b
+b0 g
+b0 l
+b0 q
+b0 v
+b0 {
+b0 ""
+b0 '"
+b0 ,"
+b0 1"
+b0 6"
+b0 ;"
+b0 @"
+b0 E"
+b0 J"
+b0 O"
+b0 T"
+b0 Y"
+b0 ^"
+b0 c"
+b0 h"
+b0 m"
+b0 r"
+b0 w"
+1%
+#20000
+0%
+0(
+#30000
+1%
+#40000
+0%
+b1010 &
+b1010 -
+#50000
+1%
+#60000
+0%
+b1101 '
+b1101 .
+b1011 &
+b1011 -
+#70000
+1%
+#80000
+18
+b1 0
+0%
+1+
+#85000
+08
+1t
+b1000000000000 0
+b1000000000000 3
+b1000000000000 z"
+b10010001101000101011001111000 *
+b10010001101000101011001111000 ,
+b10010001101000101011001111000 7
+b10010001101000101011001111000 <
+b10010001101000101011001111000 A
+b10010001101000101011001111000 F
+b10010001101000101011001111000 K
+b10010001101000101011001111000 P
+b10010001101000101011001111000 U
+b10010001101000101011001111000 Z
+b10010001101000101011001111000 _
+b10010001101000101011001111000 d
+b10010001101000101011001111000 i
+b10010001101000101011001111000 n
+b10010001101000101011001111000 s
+b10010001101000101011001111000 x
+b10010001101000101011001111000 }
+b10010001101000101011001111000 $"
+b10010001101000101011001111000 )"
+b10010001101000101011001111000 ."
+b10010001101000101011001111000 3"
+b10010001101000101011001111000 8"
+b10010001101000101011001111000 ="
+b10010001101000101011001111000 B"
+b10010001101000101011001111000 G"
+b10010001101000101011001111000 L"
+b10010001101000101011001111000 Q"
+b10010001101000101011001111000 V"
+b10010001101000101011001111000 ["
+b10010001101000101011001111000 `"
+b10010001101000101011001111000 e"
+b10010001101000101011001111000 j"
+b10010001101000101011001111000 o"
+b10010001101000101011001111000 t"
+b1100 )
+b1100 /
+b1100 x"
+#90000
+b10010001101000101011001111000 v
+1%
+#100000
+0%
+#105000
+0t
+b10010001101000101011001111000 "
+b10010001101000101011001111000 2
+b0 0
+b0 '
+b0 .
+b1100 &
+b1100 -
+0+
+#110000
+1%
+#120000
+0%
+#125000
+1t
+b0 "
+b0 2
+b1000000000000 0
+b111 '
+b111 .
+b101 &
+b101 -
+b10101010101010101011101110111011 *
+b10101010101010101011101110111011 ,
+b10101010101010101011101110111011 7
+b10101010101010101011101110111011 <
+b10101010101010101011101110111011 A
+b10101010101010101011101110111011 F
+b10101010101010101011101110111011 K
+b10101010101010101011101110111011 P
+b10101010101010101011101110111011 U
+b10101010101010101011101110111011 Z
+b10101010101010101011101110111011 _
+b10101010101010101011101110111011 d
+b10101010101010101011101110111011 i
+b10101010101010101011101110111011 n
+b10101010101010101011101110111011 s
+b10101010101010101011101110111011 x
+b10101010101010101011101110111011 }
+b10101010101010101011101110111011 $"
+b10101010101010101011101110111011 )"
+b10101010101010101011101110111011 ."
+b10101010101010101011101110111011 3"
+b10101010101010101011101110111011 8"
+b10101010101010101011101110111011 ="
+b10101010101010101011101110111011 B"
+b10101010101010101011101110111011 G"
+b10101010101010101011101110111011 L"
+b10101010101010101011101110111011 Q"
+b10101010101010101011101110111011 V"
+b10101010101010101011101110111011 ["
+b10101010101010101011101110111011 `"
+b10101010101010101011101110111011 e"
+b10101010101010101011101110111011 j"
+b10101010101010101011101110111011 o"
+b10101010101010101011101110111011 t"
+1+
+#130000
+b10101010101010101011101110111011 v
+1%
+#140000
+0%
+#145000

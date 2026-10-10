@@ -18,7 +18,6 @@ module REGISTER #(parameter WIDTH = 8, parameter noOfRegs = 8) (
     input [$clog2(noOfRegs)-1:0] rAddrA,
     output [WIDTH-1:0] rDataB,
     input [$clog2(noOfRegs)-1:0] rAddrB
-
 );
 
 // signals to get which register should be enabled according to the address
